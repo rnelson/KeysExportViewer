@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -109,7 +108,7 @@
 			// openToolStripButton
 			// 
 			this.openToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
+			this.openToolStripButton.Image = global::KeysExportViewer.Properties.Resources.Open_6529;
 			this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.White;
 			this.openToolStripButton.Name = "openToolStripButton";
 			this.openToolStripButton.Size = new System.Drawing.Size(23, 22);
@@ -119,7 +118,7 @@
 			// previousToolStripButton
 			// 
 			this.previousToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.previousToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("previousToolStripButton.Image")));
+			this.previousToolStripButton.Image = global::KeysExportViewer.Properties.Resources.NavigateBackwards_6270;
 			this.previousToolStripButton.ImageTransparentColor = System.Drawing.Color.White;
 			this.previousToolStripButton.Name = "previousToolStripButton";
 			this.previousToolStripButton.Size = new System.Drawing.Size(23, 22);
@@ -129,7 +128,7 @@
 			// nextToolStripButton
 			// 
 			this.nextToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.nextToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("nextToolStripButton.Image")));
+			this.nextToolStripButton.Image = global::KeysExportViewer.Properties.Resources.NavigateForward_6271;
 			this.nextToolStripButton.ImageTransparentColor = System.Drawing.Color.White;
 			this.nextToolStripButton.Name = "nextToolStripButton";
 			this.nextToolStripButton.Size = new System.Drawing.Size(23, 22);
