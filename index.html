@@ -1,87 +1,89 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>kev by rnelson</title>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<title>KeysExport Viewer</title>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1 class="header">kev</h1>
-        <p class="header">Viewer for MSDN's KeysExport.xml file</p>
-
-        <ul>
-          <li class="download"><a class="buttons" href="https://github.com/rnelson/KeysExportViewer/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/rnelson/KeysExportViewer/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/rnelson/KeysExportViewer">View On GitHub</a></li>
-        </ul>
-
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/rnelson">rnelson</a></p>
-
-
-      </header>
-      <section>
-        <h1>
-<a name="keysexport-viewer-0020" class="anchor" href="#keysexport-viewer-0020"><span class="octicon octicon-link"></span></a>KeysExport Viewer 0.0.2.0</h1>
-
-<h2>
-<a name="about" class="anchor" href="#about"><span class="octicon octicon-link"></span></a>About</h2>
-
-<p>KeysExport Viewer, or KEV for short because I'm lazy, is a viewer for the
-KeysExport.xml file available to MSDN subscribers. This file contains all of
-the serial numbers that they have generated or that have been generated for
-them.</p>
-
-<p>It's very easy to download new versions of this file, but I'd rather not have
-to read through a bunch of XML if I'm trying to grab the right key to use on
-an install. Yes, I'm lazy. If it makes the situation any better, writing this
-little application also let me learn a few new things about C# and .NET that I
-hadn't had a chance to play with yet.</p>
-
-<h2>
-<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
-
-<ul>
-<li>Displays each serial number for product keys</li>
-<li>Displays HTML data where present in place of serial numbers</li>
-</ul><h2>
-<a name="future-goals" class="anchor" href="#future-goals"><span class="octicon octicon-link"></span></a>Future Goals</h2>
-
-<p>The one disadvantage KEV has to my previous system of a text file where I
-enter the keys I've used is that I can't make any notes in the document (and
-if I do, they'll be overwritten when I update the file). My one and only goal
-at the moment is to support adding comments, which will be saved to a separate
-file to ensure they still exist if a new XML file is downloaded.</p>
-
-<h2>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
-
-<p>This program is licensed under the <a href="https://github.com/rnelson/KeysExportViewer/blob/master/LICENSE">MIT license</a>.</p>
-      </section>
-      <footer>
-        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
-      </footer>
-    </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		          <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-42672537-1");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
-
-  </body>
+		<link rel="stylesheet" href="stylesheets/styles.css">
+		<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+		<script src="javascripts/scale.fix.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<!--[if lt IE 9]>
+			<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<div class="wrapper">
+			<header>
+				<h1 class="header">KEV</h1>
+				<p class="header">Viewer for MSDN's KeysExport.xml file</p>
+				
+				<ul>
+					<li class="download"><a class="buttons" href="https://github.com/rnelson/KeysExportViewer/zipball/master">Download ZIP</a></li>
+					<li class="download"><a class="buttons" href="https://github.com/rnelson/KeysExportViewer/tarball/master">Download TAR</a></li>
+					<li><a class="buttons github" href="https://github.com/rnelson/KeysExportViewer">View On GitHub</a></li>
+				</ul>
+				
+				<p><small>Lovingly coded by <a class="header name" href="https://github.com/rnelson">rnelson</a></small></p>
+			</header>
+			
+			<section>
+				<h1><a name="keysexport-viewer-0020" class="anchor" href="#keysexport-viewer-0020"><span class="octicon octicon-link"></span></a>KeysExport Viewer</h1>
+				
+				<h2><a name="about" class="anchor" href="#about"><span class="octicon octicon-link"></span></a>About</h2>
+				<p>
+					KeysExport Viewer is a viewer for the <kbd>KeysExport.xml</kbd> file available to MSDN subscribers. This file contains
+					all of the serial numbers that they have generated or that have been generated for them.
+				</p>
+				
+				<h2><a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
+				<ul>
+					<li>Displays each serial number for product keys</li>
+					<li>Displays HTML data where present in place of serial numbers</li>
+				</ul>
+				
+				<h2><a name="future-goals" class="anchor" href="#future-goals"><span class="octicon octicon-link"></span></a>Future Goals</h2>
+				<p>
+					The one disadvantage KEV has to my previous system of a text file where I enter the keys I've used is that I can't
+					make any notes in the document (and if I do, they'll be overwritten when I update the file). My one and only goal at
+					the moment is to support adding comments, which will be saved to a separate file to ensure they still exist if a new
+					XML file is downloaded.
+				</p>
+				
+				<h2><a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+				<ul>
+					<li>Windows Vista SP2 or newer</li>
+					<li><a href="http://msdn.microsoft.com/en-us/library/8z6watww.aspx">Microsoft .NET Framework 4.5</a></li>
+					<li>~60 KB disk space</li>
+					<li>A valid <kbd>KeysExport.xml</kbd> file from an MSDN subscription</li>
+				</ul>
+				<p>
+					At present, there are no binaries available. You should be able to build it by hand with <kbd>csc</kbd>, but the
+					source includes a Visual Studio solution. Visual Studio 2012 or newer is required.
+				</p>
+				
+				<h2><a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+				<p>
+					This program is licensed under the <a href="https://github.com/rnelson/KeysExportViewer/blob/master/LICENSE">MIT license</a>.
+				</p>
+			</section>
+			
+			<footer>
+				<p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+			</footer>
+		</div>
+		
+		<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		<script type="text/javascript">
+			var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+			document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+		<script type="text/javascript">
+			try {
+				var pageTracker = _gat._getTracker("UA-42672537-1");
+				pageTracker._trackPageview();
+			} catch(err) {}
+		</script>
+	</body>
 </html>
