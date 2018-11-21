@@ -1,5 +1,5 @@
-KeysExport Viewer 0.0.2.0
-=========================
+KeysExport Viewer
+=================
 
 About
 -----
