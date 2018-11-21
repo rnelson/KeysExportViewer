@@ -66,7 +66,7 @@ namespace KeysExportViewer
 
 			// Load the document
 			XDocument doc = XDocument.Load(filename);
-			var keyNodes = from productKey in doc.Element("YourKey").Elements("Product_Key")
+			var keyNodes = from productKey in doc.Descendants("YourKey").Elements("Product_Key")
 				let key = productKey.Element("Key")
 				where (int)int.Parse((string)key.Attribute("ID"), CultureInfo.InvariantCulture) != -3
 				select new
