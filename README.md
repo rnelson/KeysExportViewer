@@ -31,4 +31,4 @@ License
 -------
 This program is licensed under the [MIT license][license].
 
-[license]: https://github.com/rnelson/KeysExportViewer/blob/master/LICENSE
+[license]: https://rnelson.mit-license.org/
