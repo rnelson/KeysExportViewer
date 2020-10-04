@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
 namespace KeysExportViewer
 {
+	[SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
 	public partial class MainWindow : Form
 	{
 		#region Data Members
 		/// <summary>
 		/// The key dictionary
 		/// </summary>
-		private IReadOnlyDictionary<Guid, MsdnKey> _dict;
+		private IReadOnlyDictionary<Guid, MsdnKey> keys;
 		#endregion Data Members
 
 		#region Constructors
@@ -34,42 +36,42 @@ namespace KeysExportViewer
 		/// <summary>
 		/// Opens a file.
 		/// </summary>
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.MessageBox.Show(System.String,System.String,System.Windows.Forms.MessageBoxButtons,System.Windows.Forms.MessageBoxIcon,System.Windows.Forms.MessageBoxDefaultButton,System.Windows.Forms.MessageBoxOptions)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "KeysExport"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.MessageBox.Show(System.String)")]
+		[SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.MessageBox.Show(System.String,System.String,System.Windows.Forms.MessageBoxButtons,System.Windows.Forms.MessageBoxIcon,System.Windows.Forms.MessageBoxDefaultButton,System.Windows.Forms.MessageBoxOptions)"), SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "KeysExport"), SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.MessageBox.Show(System.String)")]
+		[SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
 		private void OpenFile()
 		{
-			if (DialogResult.OK == this.openFileDialog.ShowDialog())
+			if (DialogResult.OK != openFileDialog.ShowDialog())
+				return;
+			
+			Cursor.Current = Cursors.WaitCursor;
+
+			productsListView.Items.Clear();
+			webBrowser.Visible = false;
+			panel.Visible = false;
+
+			try
 			{
-				Cursor.Current = Cursors.WaitCursor;
+				var collection = new KeysCollection(openFileDialog.FileName);
+				keys = collection.Keys;
 
-				this.productsListView.Items.Clear();
-				this.webBrowser.Visible = false;
-				this.panel.Visible = false;
-
-				try
+				foreach (var key in keys.Keys)
 				{
-					KeysCollection collection = new KeysCollection(this.openFileDialog.FileName);
-					this._dict = collection.Keys;
-
-					foreach (Guid key in _dict.Keys)
-					{
-						// Get the actual data we care about
-						MsdnKey val = _dict[key];
+					// Get the actual data we care about
+					var val = keys[key];
 						
-						// Create a new ListViewItem for this product
-						ListViewItem item = new ListViewItem(val.Name);
-						item.Tag = key;
+					// Create a new ListViewItem for this product
+					var item = new ListViewItem(val.Name) {Tag = key};
 
-						// Add the item to the ListView
-						this.productsListView.Items.Add(item);
-					}
+					// Add the item to the ListView
+					productsListView.Items.Add(item);
 				}
-				catch (FileNotFoundException)
-				{
-					MessageBox.Show("File " + this.openFileDialog.FileName + " does not exist.", "KeysExport Viewer", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
-				}
-
-				Cursor.Current = Cursors.Default;
 			}
+			catch (FileNotFoundException)
+			{
+				MessageBox.Show("File " + openFileDialog.FileName + " does not exist.", "KeysExport Viewer", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+			}
+
+			Cursor.Current = Cursors.Default;
 		}
 
 		/// <summary>
@@ -79,25 +81,25 @@ namespace KeysExportViewer
 		{
 			try
 			{
-				int selected = this.productsListView.SelectedIndices[0];
+				var selected = productsListView.SelectedIndices[0];
 				if (0 == selected)
 				{
-					selected = this.productsListView.Items.Count - 1;
+					selected = productsListView.Items.Count - 1;
 				}
 				else
 				{
 					selected--;
 				}
 
-				this.productsListView.Focus();
-				this.productsListView.Items[selected].Selected = true;
+				productsListView.Focus();
+				productsListView.Items[selected].Selected = true;
 			}
 			catch (ArgumentOutOfRangeException)
 			{
-				if (this.productsListView.Items.Count > 0)
+				if (productsListView.Items.Count > 0)
 				{
-					this.productsListView.Focus();
-					this.productsListView.Items[this.productsListView.Items.Count - 1].Selected = true;
+					productsListView.Focus();
+					productsListView.Items[productsListView.Items.Count - 1].Selected = true;
 				}
 			}
 		}
@@ -109,8 +111,8 @@ namespace KeysExportViewer
 		{
 			try
 			{
-				int selected = this.productsListView.SelectedIndices[0];
-				if (this.productsListView.Items.Count - 1 == selected)
+				var selected = productsListView.SelectedIndices[0];
+				if (productsListView.Items.Count - 1 == selected)
 				{
 					selected = 0;
 				}
@@ -119,15 +121,15 @@ namespace KeysExportViewer
 					selected++;
 				}
 
-				this.productsListView.Focus();
-				this.productsListView.Items[selected].Selected = true;
+				productsListView.Focus();
+				productsListView.Items[selected].Selected = true;
 			}
 			catch (ArgumentOutOfRangeException)
 			{
-				if (this.productsListView.Items.Count > 0)
+				if (productsListView.Items.Count > 0)
 				{
-					this.productsListView.Focus();
-					this.productsListView.Items[0].Selected = true;
+					productsListView.Focus();
+					productsListView.Items[0].Selected = true;
 				}
 			}
 		}
@@ -137,43 +139,44 @@ namespace KeysExportViewer
 		/// </summary>
 		private void ShowCurrentRecord()
 		{
-			if (null != this._dict)
+			if (null == keys)
+				return;
+			
+			foreach (ListViewItem item in productsListView.SelectedItems)
 			{
-				foreach (ListViewItem item in this.productsListView.SelectedItems)
+				var selectedKey = keys[(Guid)item.Tag];
+
+				if (null == selectedKey)
+					continue;
+				
+				if (selectedKey.HasKey)
 				{
-					MsdnKey selectedKey = this._dict[(Guid)item.Tag];
-					if (null != selectedKey)
+					productNameValueLabel.Text = selectedKey.Name;
+					keyIdValueLabel.Text = selectedKey.Id.ToString(CultureInfo.InvariantCulture);
+					keysListView.Items.Clear();
+
+					foreach (var key in selectedKey.Keys)
 					{
-						if (selectedKey.HasKey)
-						{
-							this.productNameValueLabel.Text = selectedKey.Name;
-							this.keyIdValueLabel.Text = selectedKey.Id.ToString(CultureInfo.InvariantCulture);
-							this.keysListView.Items.Clear();
+						var keyItem = new ListViewItem(key.KeyType);
+						keyItem.SubItems.Add(null == key.ClaimedDate ? "" : ((DateTime)key.ClaimedDate).ToShortDateString());
+						keyItem.SubItems.Add(key.Key);
+						keyItem.Tag = key;
 
-							foreach (MsdnKey.IndividualKey key in selectedKey.Keys)
-							{
-								ListViewItem keyItem = new ListViewItem(key.KeyType);
-								keyItem.SubItems.Add(null == key.ClaimedDate ? "" : ((DateTime)key.ClaimedDate).ToShortDateString());
-								keyItem.SubItems.Add(key.Key);
-								keyItem.Tag = key;
-
-								this.keysListView.Items.Add(keyItem);
-							}
-						}
-						else
-						{
-							this.webBrowser.Navigate("about:blank");
-							if (null != webBrowser.Document)
-							{
-								this.webBrowser.Document.Write(string.Empty);
-							}
-							this.webBrowser.DocumentText = "<html>" + selectedKey.CDATA + "</html>";
-						}
-
-						this.webBrowser.Visible = !selectedKey.HasKey;
-						this.panel.Visible = selectedKey.HasKey;
+						keysListView.Items.Add(keyItem);
 					}
 				}
+				else
+				{
+					webBrowser.Navigate(new Uri("about:blank"));
+					if (null != webBrowser.Document)
+					{
+						webBrowser.Document.Write(string.Empty);
+					}
+					webBrowser.DocumentText = "<html>" + selectedKey.CDATA + "</html>";
+				}
+
+				webBrowser.Visible = !selectedKey.HasKey;
+				panel.Visible = selectedKey.HasKey;
 			}
 		}
 
@@ -182,13 +185,12 @@ namespace KeysExportViewer
 		/// </summary>
 		private void CopyCurrentKeyToClipboard()
 		{
-			if (1 == this.keysListView.SelectedItems.Count)
+			if (1 != keysListView.SelectedItems.Count) return;
+			
+			var key = (MsdnKey.IndividualKey)keysListView.SelectedItems[0].Tag;
+			if (null != key)
 			{
-				MsdnKey.IndividualKey key = (MsdnKey.IndividualKey)this.keysListView.SelectedItems[0].Tag;
-				if (null != key)
-				{
-					Clipboard.SetText(key.Key);
-				}
+				Clipboard.SetText(key.Key);
 			}
 		}
 		#endregion Private Methods
@@ -201,7 +203,7 @@ namespace KeysExportViewer
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			MainWindow.Exit();
+			Exit();
 		}
 
 		/// <summary>
@@ -211,7 +213,7 @@ namespace KeysExportViewer
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		private void openToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.OpenFile();
+			OpenFile();
 		}
 
 		/// <summary>
@@ -221,7 +223,7 @@ namespace KeysExportViewer
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		private void openToolStripButton_Click(object sender, EventArgs e)
 		{
-			this.OpenFile();
+			OpenFile();
 		}
 
 		/// <summary>
@@ -231,7 +233,7 @@ namespace KeysExportViewer
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		private void previousToolStripButton_Click(object sender, EventArgs e)
 		{
-			this.GoToPreviousRecord();
+			GoToPreviousRecord();
 		}
 
 		/// <summary>
@@ -241,7 +243,7 @@ namespace KeysExportViewer
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		private void nextToolStripButton_Click(object sender, EventArgs e)
 		{
-			this.GoToNextRecord();
+			GoToNextRecord();
 		}
 
 		/// <summary>
@@ -251,7 +253,7 @@ namespace KeysExportViewer
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		private void productsListView_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			this.ShowCurrentRecord();
+			ShowCurrentRecord();
 		}
 
 		/// <summary>
@@ -261,7 +263,7 @@ namespace KeysExportViewer
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		private void keysListView_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			this.CopyCurrentKeyToClipboard();
+			CopyCurrentKeyToClipboard();
 		}
 		#endregion Event Handlers
 	}

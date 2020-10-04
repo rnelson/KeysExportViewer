@@ -6,50 +6,31 @@ namespace KeysExportViewer
 	/// <summary>
 	/// Class MsdnKey
 	/// </summary>
-	class MsdnKey
+	internal class MsdnKey
 	{
 		/// <summary>
 		/// Class IndividualKey
 		/// </summary>
 		public class IndividualKey
 		{
-			#region Data Members
-			private DateTime? _claimedDate;
-			private string _keyType;
-			private string _key;
-			#endregion Data Members
-
 			#region Properties
-
 			/// <summary>
 			/// Gets or sets the claimed date.
 			/// </summary>
 			/// <value>The claimed date.</value>
-			public DateTime? ClaimedDate
-			{
-				get { return this._claimedDate; }
-				set { this._claimedDate = value; }
-			}
+			public DateTime? ClaimedDate { get; set; }
 
 			/// <summary>
 			/// Gets or sets the type of the key.
 			/// </summary>
 			/// <value>The type of the key.</value>
-			public string KeyType
-			{
-				get { return this._keyType; }
-				set { this._keyType = value; }
-			}
+			public string KeyType { get; set; }
 
 			/// <summary>
 			/// Gets or sets the key.
 			/// </summary>
 			/// <value>The key.</value>
-			public string Key
-			{
-				get { return this._key; }
-				set { this._key = value; }
-			}
+			public string Key { get; set; }
 			#endregion Properties
 
 			#region Constructors
@@ -58,19 +39,15 @@ namespace KeysExportViewer
 			/// </summary>
 			public IndividualKey()
 			{
-				this._claimedDate = MsdnKey.TryParseDateTime(null);
-				this._keyType = string.Empty;
-				this._key = string.Empty;
+				ClaimedDate = TryParseDateTime(null);
+				KeyType = string.Empty;
+				Key = string.Empty;
 			}
 			#endregion Constructors
 		}
 
 		#region Data Members
-		private IList<IndividualKey> _keys;
-		private string _name;
-		private int _id;
-		private string _cdata;
-		private bool _hasKey;
+		private readonly IList<IndividualKey> keys;
 		#endregion Data Members
 
 		#region Properties
@@ -78,50 +55,31 @@ namespace KeysExportViewer
 		/// Gets the keys.
 		/// </summary>
 		/// <value>The keys.</value>
-		public IList<IndividualKey> Keys
-		{
-			get { return this._keys; }
-		}
+		public IEnumerable<IndividualKey> Keys => keys;
 
 		/// <summary>
 		/// Gets or sets the name.
 		/// </summary>
 		/// <value>The name.</value>
-		public string Name
-		{
-			get { return this._name; }
-			set { this._name = value; }
-		}
+		public string Name { get; set; }
 
 		/// <summary>
 		/// Gets or sets the id.
 		/// </summary>
 		/// <value>The id.</value>
-		public int Id
-		{
-			get { return this._id; }
-			set { this._id = value; }
-		}
+		public int Id { get; set; }
 
 		/// <summary>
 		/// Gets or sets the CDATA.
 		/// </summary>
 		/// <value>The CDATA.</value>
-		public string CDATA
-		{
-			get { return this._cdata; }
-			set { this._cdata = value; }
-		}
+		public string CDATA { get; private set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this instance has key.
 		/// </summary>
 		/// <value><c>true</c> if this instance has key; otherwise, <c>false</c>.</value>
-		public bool HasKey
-		{
-			get { return this._hasKey; }
-			set { this._hasKey = value; }
-		}
+		public bool HasKey { get; private set; }
 
 		/// <summary>
 		/// Sets the key text.
@@ -131,18 +89,17 @@ namespace KeysExportViewer
 		{
 			set
 			{
-				string text = (string)value;
-				if (!string.IsNullOrEmpty(text))
+				if (string.IsNullOrEmpty(value))
+					return;
+				
+				if (value.Contains("<"))
 				{
-					if (text.Contains("<"))
-					{
-						this.CDATA = text; //.Trim().Substring(9, text.Trim().Length-2);
-						this.HasKey = false;
-					}
-					else
-					{
-						this.HasKey = true;
-					}
+					CDATA = value;
+					HasKey = false;
+				}
+				else
+				{
+					HasKey = true;
 				}
 			}
 		}
@@ -154,11 +111,11 @@ namespace KeysExportViewer
 		/// </summary>
 		public MsdnKey()
 		{
-			this._keys = new List<IndividualKey>();
-			this._name = string.Empty;
-			this._id = -1;
-			this._cdata = string.Empty;
-			this._hasKey = true;
+			keys = new List<IndividualKey>();
+			Name = string.Empty;
+			Id = -1;
+			CDATA = string.Empty;
+			HasKey = true;
 		}
 		#endregion Constructors
 
@@ -169,7 +126,7 @@ namespace KeysExportViewer
 		/// <param name="key">The key.</param>
 		public void AddKey(IndividualKey key)
 		{
-			this._keys.Add(key);
+			keys.Add(key);
 		}
 
 		/// <summary>
@@ -179,16 +136,15 @@ namespace KeysExportViewer
 		/// <returns>DateTime.</returns>
 		public static DateTime? TryParseDateTime(string input)
 		{
-			if (!string.IsNullOrEmpty(input))
+			if (string.IsNullOrEmpty(input))
+				return null;
+
+			if (DateTime.TryParse(input, out var dt))
 			{
-				DateTime dt;
-				if (DateTime.TryParse(input, out dt))
-				{
-					return dt;
-				}
+				return dt;
 			}
 
-			return null;// new DateTime(1970, 1, 1, 0, 0, 0);
+			return null;
 		}
 		#endregion Public Methods
 	}
