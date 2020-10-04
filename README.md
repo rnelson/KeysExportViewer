@@ -3,16 +3,15 @@ KeysExport Viewer
 
 About
 -----
-KeysExport Viewer, or KEV for short because I'm lazy, is a viewer for the
-KeysExport.xml file available to MSDN subscribers. This file contains all of
-the serial numbers that they have generated or that have been generated for
+KeysExport Viewer is a viewer for the KeysExport.xml file available to MSDN 
+subscribers. This file contains all of the serial numbers that they have 
+generated or that have been generated for
 them.
 
-It's very easy to download new versions of this file, but I'd rather not have
-to read through a bunch of XML if I'm trying to grab the right key to use on
-an install. Yes, I'm lazy. If it makes the situation any better, writing this
-little application also let me learn a few new things about C# and .NET that I
-hadn't had a chance to play with yet.
+It's very easy to download new versions of this file, but I'd rather not 
+have to read through a bunch of XML if I'm trying to grab the right key to 
+use on an install. At the time I created this project, this was also a 
+great way to learn some new-to-me .NET development.
 
 Features
 --------
@@ -21,11 +20,14 @@ Features
 
 Future Goals
 ------------
-The one disadvantage KEV has to my previous system of a text file where I
-enter the keys I've used is that I can't make any notes in the document (and
-if I do, they'll be overwritten when I update the file). My one and only goal
-at the moment is to support adding comments, which will be saved to a separate
-file to ensure they still exist if a new XML file is downloaded.
+Prior to writing KeysExport Viewer, I just tossed generated keys into a 
+text  file. The advantage this had over parsing the XML is that I could 
+add notes, documenting things like which VM a specific serial number was 
+used in.
+
+"Someday" I want to build a way to add additional notes like that. Perhaps 
+a zip file (with some custom extension) that contains a SQLite database 
+and the most recently provided XML file?
 
 License
 -------
