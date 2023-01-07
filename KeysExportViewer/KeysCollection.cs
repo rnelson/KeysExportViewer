@@ -16,7 +16,7 @@ namespace KeysExportViewer
 		/// <summary>
 		/// The keys
 		/// </summary>
-		private IDictionary<Guid, MsdnKey> keys = new Dictionary<Guid, MsdnKey>();
+		private IDictionary<string, MsdnKey> _keys = new Dictionary<string, MsdnKey>();
 		#endregion Data Members
 
 		#region Properties
@@ -24,7 +24,7 @@ namespace KeysExportViewer
 		/// Gets the keys.
 		/// </summary>
 		/// <value>The keys.</value>
-		public IReadOnlyDictionary<Guid, MsdnKey> Keys => new ReadOnlyDictionary<Guid, MsdnKey>(keys);
+		public IReadOnlyDictionary<string, MsdnKey> Keys => new ReadOnlyDictionary<string, MsdnKey>(_keys);
 		#endregion Properties
 
 		#region Constructors
@@ -52,7 +52,7 @@ namespace KeysExportViewer
 			}
 
 			// Get rid of the existing set of keys
-			keys = new Dictionary<Guid, MsdnKey>();
+			_keys.Clear();
 
 			// Load the document
 			var doc = XDocument.Load(filename);
@@ -88,8 +88,21 @@ namespace KeysExportViewer
 					}
 				}
 
-				keys.Add(Guid.NewGuid(), key);
-			}
+				// If the product already exists, add the new keys to it
+                if (_keys.TryGetValue(key.Name, out MsdnKey msdnKey))
+                {
+                    foreach (var individualKey in key.Keys)
+                    {
+						if(msdnKey.Keys.All(k => k.Key != individualKey.Key))
+                            msdnKey.AddKey(individualKey);
+                    }
+                }
+                else
+                {
+					// Add the new product and its keys
+                    _keys.Add(key.Name, key);
+                }
+            }
 		}
 		#endregion Private Methods
 	}
