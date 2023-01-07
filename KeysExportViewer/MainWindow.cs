@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace KeysExportViewer
@@ -14,7 +15,7 @@ namespace KeysExportViewer
 		/// <summary>
 		/// The key dictionary
 		/// </summary>
-		private IReadOnlyDictionary<Guid, MsdnKey> keys;
+		private IReadOnlyDictionary<string, MsdnKey> _keys;
 		#endregion Data Members
 
 		#region Constructors
@@ -52,19 +53,16 @@ namespace KeysExportViewer
 			try
 			{
 				var collection = new KeysCollection(openFileDialog.FileName);
-				keys = collection.Keys;
+				_keys = collection.Keys;
 
-				foreach (var key in keys.Keys)
+				foreach (var key in _keys.Keys)
 				{
 					// Get the actual data we care about
-					var val = keys[key];
-						
-					// Create a new ListViewItem for this product
-					var item = new ListViewItem(val.Name) {Tag = key};
+					var val = _keys[key];
 
-					// Add the item to the ListView
-					productsListView.Items.Add(item);
-				}
+                    // Add the item to the ListView
+                    productsListView.Items.Add(new ListViewItem(val.Name) { Tag = key });
+                }
 			}
 			catch (FileNotFoundException)
 			{
@@ -139,12 +137,12 @@ namespace KeysExportViewer
 		/// </summary>
 		private void ShowCurrentRecord()
 		{
-			if (null == keys)
+			if (null == _keys)
 				return;
 			
 			foreach (ListViewItem item in productsListView.SelectedItems)
 			{
-				var selectedKey = keys[(Guid)item.Tag];
+				var selectedKey = _keys[(string)item.Tag];
 
 				if (null == selectedKey)
 					continue;
@@ -164,6 +162,7 @@ namespace KeysExportViewer
 
 						keysListView.Items.Add(keyItem);
 					}
+					CopyAllKeysOfProductToClipboard(selectedKey.Name, selectedKey.Keys);
 				}
 				else
 				{
@@ -180,6 +179,23 @@ namespace KeysExportViewer
 			}
 		}
 
+		/// <summary>
+		/// Copies the product name and all keys of the product to the clipboard.
+		/// </summary>
+		/// <param name="productName"></param>
+		/// <param name="keys"></param>
+        private static void CopyAllKeysOfProductToClipboard(string productName, IEnumerable<MsdnKey.IndividualKey> keys)
+        {
+            var sb = new StringBuilder(256);
+            sb.AppendFormat(Application.CurrentCulture, "{0}:{1}{2}", productName, Environment.NewLine, Environment.NewLine);
+            foreach (var individualKey in keys)
+            {
+                sb.AppendFormat(Application.CurrentCulture, "{0} ({1}){2}", individualKey.Key, individualKey.KeyType, Environment.NewLine);
+            }
+            Clipboard.SetText(sb.ToString());
+            sb.Clear();
+        }
+		
 		/// <summary>
 		/// Copies the current key to clipboard.
 		/// </summary>
