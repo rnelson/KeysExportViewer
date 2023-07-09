@@ -24,14 +24,7 @@ Features
 
 Future Goals
 ------------
-Prior to writing KeysExport Viewer, I just tossed generated keys into a 
-text  file. The advantage this had over parsing the XML is that I could 
-add notes, documenting things like which VM a specific serial number was 
-used in.
-
-"Someday" I want to build a way to add additional notes like that. Perhaps 
-a zip file (with some custom extension) that contains a SQLite database 
-and the most recently provided XML file?
+Want to help out? Check out the [open issues](https://github.com/rnelson/KeysExportViewer/issues?q=is%3Aopen)!
 
 License
 -------
