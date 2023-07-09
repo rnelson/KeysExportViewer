@@ -25,7 +25,7 @@ Features
 Requirements
 ------------
 * .NET 6
-* Windows (see #5)
+* Windows (see [#5](https://github.com/rnelson/KeysExportViewer/issues/5))
 
 Future Goals
 ------------
