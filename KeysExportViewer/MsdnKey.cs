@@ -31,6 +31,12 @@ namespace KeysExportViewer
 			/// </summary>
 			/// <value>The key.</value>
 			public string Key { get; set; }
+
+            /// <summary>
+            /// Gets or sets the key.
+            /// </summary>
+            /// <value>The key.</value>
+            public string Note { get; set; }
 			#endregion Properties
 
 			#region Constructors
@@ -42,6 +48,7 @@ namespace KeysExportViewer
 				ClaimedDate = TryParseDateTime(null);
 				KeyType = string.Empty;
 				Key = string.Empty;
+				Note = string.Empty;
 			}
 			#endregion Constructors
 		}

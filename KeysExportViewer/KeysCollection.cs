@@ -65,7 +65,7 @@ namespace KeysExportViewer
 					Id = int.Parse((string)key.Attribute("ID")),
 					KeyText = key.Value,
 					Keys = productKey.Elements("Key")
-				};
+                };
 
 			foreach (var keyNode in keyNodes)
 			{
@@ -81,8 +81,9 @@ namespace KeysExportViewer
 						{
 							ClaimedDate = MsdnKey.TryParseDateTime((string) indKey.Attribute("ClaimedDate")),
 							KeyType = (string) indKey.Attribute("Type"),
-							Key = indKey.Value
-						};
+							Key = indKey.Value,
+							Note = (string)indKey.Attribute("notes")
+                        };
 
 						key.AddKey(ik);
 					}
