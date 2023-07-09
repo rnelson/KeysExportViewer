@@ -13,10 +13,14 @@ have to read through a bunch of XML if I'm trying to grab the right key to
 use on an install. At the time I created this project, this was also a 
 great way to learn some new-to-me .NET development.
 
+A huge thank you to [all those who have contributed](https://github.com/rnelson/KeysExportViewer/blob/master/CONTRIBUTORS.md) 
+to the project, helping keep it alive and useful to developers.
+
 Features
 --------
 * Displays each serial number for product keys
 * Displays HTML data where present in place of serial numbers
+* Allows you to filter the list, showing just the entries you are looking for
 
 Future Goals
 ------------

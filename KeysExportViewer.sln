@@ -8,6 +8,7 @@ ProjectSection(SolutionItems) = preProject
 	.gitignore = .gitignore
 	LICENSE = LICENSE
 	README.md = README.md
+	CONTRIBUTORS.md = CONTRIBUTORS.md
 EndProjectSection
 EndProject
 Global

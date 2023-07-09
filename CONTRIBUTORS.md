@@ -1,7 +1,7 @@
 # KeysExportViewer Contributors
 
-+ Ross Nelson, @rnelson
-  + Initital development
+Some awesome folks have contributed to this app and made it far better than the state I initially left it in. I'm very happy to not only find out that it's useful to others but that they're willing to spend a little time improving it for all of us. ☺️
+
 + Jozef Izso, @jozefizso
   + Handle updated `KeysExport.xml` format
 + @axunonb
