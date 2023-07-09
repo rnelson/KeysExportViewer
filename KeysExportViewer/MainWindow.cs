@@ -10,6 +10,7 @@ using System.Windows.Forms;
 namespace KeysExportViewer
 {
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
+    [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
     public partial class MainWindow : Form
     {
         #region Data Members
@@ -96,14 +97,14 @@ namespace KeysExportViewer
         private static bool MatchesName(string name, string query)
         {
             // Split the query by spaces and filter out empty entries
-            string[] queryParts = query.ToUpperInvariant().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var queryParts = query.ToUpperInvariant().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             // Check if all query parts are present in the name
             return queryParts.All(part => name.ToUpperInvariant().Contains(part));
         }
 
         /// <summary>Checks if the key has notes, and if a note contains the query value</summary>
-        /// <param name="name">The key name</param>
+        /// <param name="key">The key name</param>
         /// <param name="query">The query to search for</param>
         /// <returns>True if a note contains he query, otherwise false</returns>
         private static bool MatchesNote(MsdnKey key, string query)
@@ -333,7 +334,7 @@ namespace KeysExportViewer
         }
 
         /// <summary>
-        /// Handles the Rezise event of the ProductsListView control
+        /// Handles the Resize event of the ProductsListView control
         /// </summary>
         /// <param name="sender">The source of the event</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>

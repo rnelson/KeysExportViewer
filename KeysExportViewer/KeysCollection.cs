@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -10,13 +9,14 @@ using System.Xml.Linq;
 namespace KeysExportViewer
 {
 	[SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
+	[SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
 	internal class KeysCollection
 	{
 		#region Data Members
 		/// <summary>
 		/// The keys
 		/// </summary>
-		private IDictionary<string, MsdnKey> _keys = new Dictionary<string, MsdnKey>();
+		private readonly IDictionary<string, MsdnKey> _keys = new Dictionary<string, MsdnKey>();
 		#endregion Data Members
 
 		#region Properties
@@ -90,7 +90,7 @@ namespace KeysExportViewer
 				}
 
 				// If the product already exists, add the new keys to it
-                if (_keys.TryGetValue(key.Name, out MsdnKey msdnKey))
+                if (_keys.TryGetValue(key.Name, out var msdnKey))
                 {
                     foreach (var individualKey in key.Keys)
                     {
