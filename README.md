@@ -13,7 +13,7 @@ have to read through a bunch of XML if I'm trying to grab the right key to
 use on an install. At the time I created this project, this was also a 
 great way to learn some new-to-me .NET development.
 
-A huge thank you to [all those who have contributed](https://github.com/rnelson/KeysExportViewer/blob/master/CONTRIBUTORS.md) 
+A huge thank you to [all those who have contributed](https://github.com/rnelson/KeysExportViewer/blob/main/CONTRIBUTORS.md) 
 to the project, helping keep it alive and useful to developers.
 
 Features
