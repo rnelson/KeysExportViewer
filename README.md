@@ -22,6 +22,11 @@ Features
 * Displays HTML data where present in place of serial numbers
 * Allows you to filter the list, showing just the entries you are looking for
 
+Requirements
+------------
+* .NET 6
+* Windows (see #5)
+
 Future Goals
 ------------
 Want to help out? Check out the [open issues](https://github.com/rnelson/KeysExportViewer/issues?q=is%3Aopen)!
